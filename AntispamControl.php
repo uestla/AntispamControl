@@ -6,9 +6,7 @@ use Nette\Forms\Controls\TextInput;
 
 class AntispamControl extends TextInput
 {
-	/**
-	 * @return void
-	 */
+	/** @return void */
 	static function register()
 	{
 		Form::extensionMethod('addAntispam', callback(__CLASS__ . '::addAntispam'));
