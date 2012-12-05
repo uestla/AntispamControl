@@ -7,9 +7,9 @@ use Nette\Forms\Controls\TextInput;
 class AntispamControl extends TextInput
 {
 	/** @return void */
-	static function register()
+	static function register( $method = 'addAntispam' )
 	{
-		Form::extensionMethod('addAntispam', callback(__CLASS__ . '::addAntispam'));
+		Form::extensionMethod( $method, callback(__CLASS__ . '::addAntispam') );
 	}
 
 
@@ -21,9 +21,9 @@ class AntispamControl extends TextInput
 	 * @param  string
 	 * @return AntispamControl
 	 */
-	static function addAntispam(Form $form, $name = 'antispam', $label = 'Vymažte obsah tohoto pole', $message = 'Byl detekován pokus o spam.')
+	static function addAntispam( Form $form, $name = 'antispam', $label = 'Vymažte obsah tohoto pole', $message = 'Byl detekován pokus o spam.' )
 	{
-		return $form[$name] = new static($label, NULL, NULL, $message);
+		return $form[$name] = new static( $label, NULL, NULL, $message );
 	}
 
 
@@ -34,11 +34,11 @@ class AntispamControl extends TextInput
 	 * @param  int
 	 * @param  string
 	 */
-	function __construct($label = NULL, $cols = NULL, $maxLength = NULL, $msg = NULL)
+	function __construct( $label = NULL, $cols = NULL, $maxLength = NULL, $msg = NULL )
 	{
-		parent::__construct($label, $cols, $maxLength);
-		$this->setDefaultValue('@');
-		$this->addRule(Form::MAX_LENGTH, $msg, 0);
+		parent::__construct( $label, $cols, $maxLength );
+		$this->setDefaultValue( '@' );
+		$this->addRule( Form::MAX_LENGTH, $msg, 0 );
 	}
 
 
@@ -47,7 +47,7 @@ class AntispamControl extends TextInput
 	 * @param  string
 	 * @return string
 	 */
-	function sanitize($value)
+	function sanitize( $value )
 	{
 		return $value;
 	}
