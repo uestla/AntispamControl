@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This file is part of the AntispamControl package
+ *
+ * Copyright (c) 2013 Petr Kessler (http://kesspess.1991.cz)
+ *
+ * @license  MIT
+ * @link     https://github.com/uestla/AntispamControl
+ */
+
+
 use Nette\Forms\Form;
 use Nette\Forms\Controls\TextInput;
 
