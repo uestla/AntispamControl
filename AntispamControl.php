@@ -9,56 +9,58 @@
  * @link     https://github.com/uestla/AntispamControl
  */
 
-
 use Nette\Forms\Form;
+use Nette\Utils\Callback;
 use Nette\Forms\Controls\TextInput;
 
 
 class AntispamControl extends TextInput
 {
-	/** @return void */
-	static function register( $method = 'addAntispam' )
+
+	/**
+	 * @param  string $label
+	 * @param  int $maxLength
+	 * @param  string $errorMsg
+	 */
+	function __construct($label = NULL, $maxLength = NULL, $errorMsg = NULL)
 	{
-		Form::extensionMethod( $method, callback(__CLASS__ . '::addAntispam') );
+		parent::__construct($label, $maxLength);
+
+		$this->setDefaultValue('@');
+		$this->addRule(Form::BLANK, $errorMsg);
 	}
 
 
+	/**
+	 * @param  string $method
+	 * @return void
+	 */
+	static function register($method = 'addAntispam')
+	{
+		Form::extensionMethod($method, Callback::closure(__CLASS__ . '::addAntispam'));
+	}
+
 
 	/**
-	 * @param  Form
-	 * @param  string
-	 * @param  string
-	 * @param  string
+	 * @param  Form $form
+	 * @param  string $name
+	 * @param  string $label
+	 * @param  string $errorMsg
 	 * @return AntispamControl
 	 */
-	static function addAntispam( Form $form, $name = 'antispam', $label = 'Vymažte obsah tohoto pole', $message = 'Byl detekován pokus o spam.' )
+	static function addAntispam(Form $form, $name = 'antispam', $label = 'Leave the following field blank', $errorMsg = 'Spam detected.')
 	{
-		return $form[$name] = new static( $label, NULL, NULL, $message );
+		return $form[$name] = new static($label, NULL, NULL, $errorMsg);
 	}
 
 
-
 	/**
-	 * @param  string
-	 * @param  int
-	 * @param  int
-	 * @param  string
-	 */
-	function __construct( $label = NULL, $cols = NULL, $maxLength = NULL, $msg = NULL )
-	{
-		parent::__construct( $label, $cols, $maxLength );
-		$this->setDefaultValue( '@' );
-		$this->addRule( Form::MAX_LENGTH, $msg, 0 );
-	}
-
-
-
-	/**
-	 * @param  string
+	 * @param  string $value
 	 * @return string
 	 */
-	function sanitize( $value )
+	function sanitize($value)
 	{
 		return $value;
 	}
+
 }
