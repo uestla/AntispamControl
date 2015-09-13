@@ -26,8 +26,9 @@ class AntispamControl extends TextInput
 	{
 		parent::__construct($label, $maxLength);
 
-		$this->setDefaultValue('@');
-		$this->addRule(Form::BLANK, $errorMsg);
+		$this->setOmitted(TRUE)
+				->setDefaultValue('@')
+				->addRule(Form::BLANK, $errorMsg);
 	}
 
 
@@ -51,16 +52,6 @@ class AntispamControl extends TextInput
 	public static function addAntispam(Form $form, $name = 'antispam', $label = 'Leave the following field blank', $errorMsg = 'Spam detected.')
 	{
 		return $form[$name] = new static($label, NULL, NULL, $errorMsg);
-	}
-
-
-	/**
-	 * @param  string $value
-	 * @return string
-	 */
-	function sanitize($value)
-	{
-		return $value;
 	}
 
 }
